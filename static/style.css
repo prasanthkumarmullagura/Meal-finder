@@ -1,0 +1,33 @@
+:root {
+    --bg-deep: #0a192f;
+    --bg-card: #112240;
+    --accent: #64ffda;
+    --text-bright: #e6f1ff;
+    --text-dim: #8892b0;
+}
+
+body { background-color: var(--bg-deep); color: var(--text-bright); font-family: 'Inter', sans-serif; margin: 0; }
+
+.header-area { display: flex; flex-direction: column; align-items: center; padding: 5rem 0; }
+.logo-circle {
+    width: 380px; height: 380px;
+    border: 10px solid var(--accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-card); box-shadow: 0 0 50px rgba(100, 255, 218, 0.2);
+}
+.logo-circle b { font-size: 4.5rem; font-weight: 800; color: var(--accent); letter-spacing: -2px; }
+
+.container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+.search-bar {
+    max-width: 800px; margin: -50px auto 5rem;
+    display: flex; background: var(--bg-card); border-radius: 12px; padding: 12px; border: 1px solid #233554;
+}
+.search-bar input { flex: 1; background: transparent; border: none; color: white; padding: 0 25px; font-size: 1.3rem; outline: none; }
+.search-bar button { background: var(--accent); border: none; color: var(--bg-deep); padding: 15px 45px; border-radius: 8px; font-weight: 800; cursor: pointer; }
+
+.meal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
+.meal-card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 2px solid #233554; transition: 0.3s; text-decoration: none; color: inherit; }
+.meal-card:hover { border-color: var(--accent); transform: translateY(-10px); }
+
+#nutrition-drawer { display: none; margin-top: 25px; padding: 2rem; background: rgba(100, 255, 218, 0.05); border: 1px solid var(--accent); border-radius: 12px; }

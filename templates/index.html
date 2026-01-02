@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>MEAL DB | PREMIUM</title>
+</head>
+<body>
+    <div class="header-area">
+        <div class="logo-circle"><b>MEAL DB</b></div>
+    </div>
+
+    <div class="container">
+        <form class="search-bar" method="POST">
+            <input type="text" name="meal_name" placeholder="Search for a recipe..." value="{{ search_term }}">
+            <button type="submit">SEARCH</button>
+        </form>
+
+        {% if error %}
+        <div style="text-align:center; padding: 5rem; border: 2px solid var(--accent); border-radius:20px;">
+            <h1 style="color: var(--accent); font-size: 3rem;">NO RESULTS FOUND</h1>
+            <p style="margin-bottom: 2rem;">Searching for "{{ search_term }}" elsewhere...</p>
+            <a href="https://www.youtube.com/results?search_query={{ search_term }}" target="_blank" style="padding:15px 35px; background:red; color:white; text-decoration:none; border-radius:8px; font-weight:bold; margin-right:15px;">YOUTUBE</a>
+            <a href="https://www.google.com/search?q={{ search_term }}" target="_blank" style="padding:15px 35px; background:white; color:black; text-decoration:none; border-radius:8px; font-weight:bold;">GOOGLE</a>
+        </div>
+        {% endif %}
+
+        {% if top_priority or second_category %}
+            <h2 style="color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Filtered Results</h2>
+            <div class="meal-grid">
+                {% for m in top_priority + second_category %}
+                <a href="{{ url_for('meal_detail', meal_id=m.idMeal) }}" class="meal-card">
+                    <img src="{{ m.strMealThumb }}" style="width:100%; height:260px; object-fit:cover;">
+                    <div style="padding: 25px;">
+                        <h3 style="margin:0; font-size: 1.5rem;">{{ m.strMeal }}</h3>
+                        <p style="color: var(--accent); font-weight: 800; margin-top:10px;">{{ m.ingredient_count }} INGREDIENTS</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% elif explore_meals %}
+            <h2 style="color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Explore Flavors</h2>
+            <div class="meal-grid">
+                {% for m in explore_meals %}
+                <a href="{{ url_for('meal_detail', meal_id=m.idMeal) }}" class="meal-card">
+                    <img src="{{ m.strMealThumb }}" style="width:100%; height:260px; object-fit:cover;">
+                    <div style="padding: 25px;">
+                        <h3 style="margin:0;">{{ m.strMeal }}</h3>
+                        <p style="color: var(--text-dim); font-size: 0.8rem; margin-top:10px;">View Details →</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

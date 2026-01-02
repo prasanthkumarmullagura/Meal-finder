@@ -1,0 +1,5 @@
+Flask
+requests
+flask-caching
+google-generativeai
+python-dotenv

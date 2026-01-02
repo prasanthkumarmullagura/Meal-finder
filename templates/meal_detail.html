@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ meal.strMeal }} | Details</title>
+</head>
+<body style="background: var(--bg-deep);">
+    <div class="container" style="padding-top: 5rem;">
+        <a href="/" style="color:var(--accent); text-decoration:none; font-weight:800; font-size: 1.1rem;">← BACK TO EXPLORE</a>
+        
+        <div style="display:flex; gap:60px; margin-top:4rem; flex-wrap:wrap;">
+            <div style="flex:1.6; min-width:450px;">
+                <h1 style="font-size:4.5rem; color:var(--accent); line-height:1; margin-bottom:2rem;">{{ meal.strMeal }}</h1>
+                
+                <h2 style="color:var(--accent); border-bottom:1px solid #233554; padding-bottom:10px;">INGREDIENTS</h2>
+                <ul style="list-style:none; padding:0; font-size:1.2rem; margin-bottom:3rem;">
+                    {% for i in range(1, 21) %}
+                        {% if meal['strIngredient' ~ i] and meal['strIngredient' ~ i].strip() %}
+                            <li style="padding:10px 0; border-bottom:1px solid #112240;">
+                                <b style="color:var(--accent);">{{ meal['strMeasure' ~ i] }}</b> {{ meal['strIngredient' ~ i] }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <h2 style="color:var(--accent); border-bottom:1px solid #233554; padding-bottom:10px;">PREPARATION</h2>
+                <p style="white-space: pre-line; background: var(--bg-card); padding:2.5rem; border-radius:15px; font-size:1.2rem; line-height:1.8;">
+                    {{ meal.strInstructions }}
+                </p>
+
+                <div style="margin:2.5rem 0; padding:2rem; border-radius:15px; background: rgba(100, 255, 218, 0.05); border: 1px solid var(--accent);">
+                    <b style="color:var(--accent); font-size:1.2rem;">👨‍🍳 PRO TIP:</b>
+                    <p style="margin-top:10px; color:var(--text-bright);">Always verify ingredients for allergies. Ensure meat reaches safe internal temperatures.</p>
+                </div>
+            </div>
+
+            <div style="flex:1; min-width:380px;">
+                <img src="{{ meal.strMealThumb }}" style="width:100%; border-radius:30px; border:6px solid var(--accent); box-shadow: 0 30px 60px rgba(0,0,0,0.6);">
+                
+                <button onclick="showData()" id="reveal-btn" style="width:100%; background:var(--accent); color:var(--bg-deep); padding:22px; border-radius:15px; font-weight:900; margin-top:35px; border:none; cursor:pointer; font-size:1.3rem;">
+                   REVEAL NUTRITION INFO
+                </button>
+
+                <div id="nutrition-drawer">
+                    <h3 style="margin-top:0; color:var(--accent); font-size:1.5rem;">AI ESTIMATE (per 100g)</h3>
+                    
+                    {% if nutrition and nutrition.items %}
+                        <table style="width:100%; font-size:1.1rem;">
+                            {% for k, v in nutrition.items() %}
+                            <tr style="border-bottom:1px solid #233554;">
+                                <td style="padding:12px 0;"><b>{{ k }}</b></td>
+                                <td style="text-align:right;">{{ v }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        <p style="color: var(--text-dim);">AI nutrition data is currently unavailable.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showData() {
+            document.getElementById("nutrition-drawer").style.display = "block";
+            document.getElementById("reveal-btn").style.display = "none";
+        }
+    </script>
+</body>
+</html>
